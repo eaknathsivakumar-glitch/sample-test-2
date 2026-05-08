@@ -1,7 +1,7 @@
 revolte:
   version: '1.0'
-  project: HelloWorld Project
-  appName: helloworld-backend
+  project: My-Awesome-Project
+  appName: primary-api-service
   config:
     codeReview:
       summarize: true
