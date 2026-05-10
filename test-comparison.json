@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 5,
+    "failedTests": 0,
+    "passPercentage": "100.00%"
+  },
+  "details": [
+    {
+      "testNumber": 1,
+      "input": "2 + 3",
+      "expected": 5,
+      "actual": 5,
+      "passed": true
+    },
+    {
+      "testNumber": 2,
+      "input": "10 + 20",
+      "expected": 30,
+      "actual": 30,
+      "passed": true
+    },
+    {
+      "testNumber": 3,
+      "input": "-5 + 5",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    },
+    {
+      "testNumber": 4,
+      "input": "100 + 50",
+      "expected": 150,
+      "actual": 150,
+      "passed": true
+    },
+    {
+      "testNumber": 5,
+      "input": "0 + 0",
+      "expected": 0,
+      "actual": 0,
+      "passed": true
+    }
+  ],
+  "timestamp": "2026-05-10T07:01:03.812Z"
+}
