@@ -1,0 +1,111 @@
+{
+  "validPayments": [
+    {
+      "id": "payment_001",
+      "amount": 99.99,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "123",
+      "description": "Valid payment with correct card details"
+    },
+    {
+      "id": "payment_002",
+      "amount": 250.00,
+      "currency": "EUR",
+      "cardNumber": "5425233010103442",
+      "cardholderName": "Jane Smith",
+      "expiryMonth": "06",
+      "expiryYear": "2026",
+      "cvv": "456",
+      "description": "Valid payment with different currency"
+    },
+    {
+      "id": "payment_003",
+      "amount": 1500.50,
+      "currency": "GBP",
+      "cardNumber": "378282246310005",
+      "cardholderName": "Robert Johnson",
+      "expiryMonth": "03",
+      "expiryYear": "2027",
+      "cvv": "789",
+      "description": "Valid payment with high amount"
+    }
+  ],
+  "invalidPayments": [
+    {
+      "id": "payment_invalid_001",
+      "amount": 99.99,
+      "currency": "USD",
+      "cardNumber": "4532015112830367",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "123",
+      "expectedError": "Invalid card number",
+      "description": "Invalid card number (checksum fails)"
+    },
+    {
+      "id": "payment_invalid_002",
+      "amount": 99.99,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2020",
+      "cvv": "123",
+      "expectedError": "Card expired",
+      "description": "Expired card"
+    },
+    {
+      "id": "payment_invalid_003",
+      "amount": 99.99,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "12",
+      "expectedError": "Invalid CVV",
+      "description": "Invalid CVV (too short)"
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "payment_edge_001",
+      "amount": 0.01,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "123",
+      "description": "Minimum valid amount"
+    },
+    {
+      "id": "payment_edge_002",
+      "amount": 99999.99,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "123",
+      "description": "Maximum valid amount"
+    },
+    {
+      "id": "payment_edge_003",
+      "amount": -50.00,
+      "currency": "USD",
+      "cardNumber": "4532015112830366",
+      "cardholderName": "John Doe",
+      "expiryMonth": "12",
+      "expiryYear": "2025",
+      "cvv": "123",
+      "expectedError": "Invalid amount",
+      "description": "Negative amount"
+    }
+  ]
+}
