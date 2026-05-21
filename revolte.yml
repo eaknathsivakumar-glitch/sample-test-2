@@ -7,9 +7,6 @@ revolte:
       summarize: true
       suggestFixes: true
       commentStyle: Balanced
-  workflow:
-    developerWorkflow:
-      enabled: true
   env:
     staging:
       branch: main
@@ -29,6 +26,13 @@ revolte:
             cpu: 2
             memory: 1
             storage: 30
+        rid_2:
+          type: STORAGE_BUCKET
+          name: storage_bucket_service
+          configurations:
+            bucketName: jhhhhhhhqa-uat
+            versioningStatus: enabled
+            public: false
     qa:
       branch: develop
       codeReview: true
@@ -47,6 +51,13 @@ revolte:
             cpu: 2
             memory: 1
             storage: 30
+        rid_2:
+          type: STORAGE_BUCKET
+          name: storage_bucket_service
+          configurations:
+            bucketName: jhhhhhhhqa-ea
+            versioningStatus: enabled
+            public: false
     production:
       branch: main
       codeReview: true
@@ -69,14 +80,13 @@ revolte:
               replica:
                 min: 1
                 max: 1
-              utilization:
-                cpu:
-                  target: 70
-                memory:
-                  target: 70
-              behavior:
-                scaleDown:
-                  stabilizationWindow: 300
+        rid_2:
+          type: STORAGE_BUCKET
+          name: storage_bucket_service
+          configurations:
+            bucketName: jhhhhhhhqa-eakprod
+            versioningStatus: enabled
+            public: false
     preview:
       codeReview: true
       services:
@@ -94,3 +104,10 @@ revolte:
             cpu: 2
             memory: 1
             storage: 30
+        rid_2:
+          type: STORAGE_BUCKET
+          name: storage_bucket_service
+          configurations:
+            bucketName: jhhhhhhhqa-eak
+            versioningStatus: enabled
+            public: false
