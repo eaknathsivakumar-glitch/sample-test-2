@@ -1,0 +1,92 @@
+{
+  "validPayment": {
+    "amount": 99.99,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "John Doe",
+    "email": "john@example.com"
+  },
+  "largeAmountPayment": {
+    "amount": 9999.99,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "Jane Smith",
+    "email": "jane@example.com"
+  },
+  "smallAmountPayment": {
+    "amount": 0.99,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "Bob Johnson",
+    "email": "bob@example.com"
+  },
+  "invalidCardNumber": {
+    "amount": 50.00,
+    "currency": "USD",
+    "cardNumber": "1234567890123456",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "Invalid Card",
+    "email": "invalid@example.com"
+  },
+  "expiredCard": {
+    "amount": 75.00,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "01",
+    "expiryYear": "2020",
+    "cvv": "123",
+    "cardholderName": "Expired Card",
+    "email": "expired@example.com"
+  },
+  "invalidCVV": {
+    "amount": 100.00,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "99",
+    "cardholderName": "Invalid CVV",
+    "email": "invalidcvv@example.com"
+  },
+  "missingEmail": {
+    "amount": 50.00,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "No Email",
+    "email": ""
+  },
+  "internationalPayment": {
+    "amount": 150.00,
+    "currency": "EUR",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "06",
+    "expiryYear": "2026",
+    "cvv": "456",
+    "cardholderName": "International User",
+    "email": "intl@example.com"
+  },
+  "zeroAmountPayment": {
+    "amount": 0.00,
+    "currency": "USD",
+    "cardNumber": "4532015112830366",
+    "expiryMonth": "12",
+    "expiryYear": "2025",
+    "cvv": "123",
+    "cardholderName": "Zero Amount",
+    "email": "zero@example.com"
+  }
+}
