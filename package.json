@@ -6,12 +6,17 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
   }
 }
