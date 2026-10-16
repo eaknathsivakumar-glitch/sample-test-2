@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.json());
+app.use(express.static('public'));
 
 // Routes
 app.use('/api/v1', healthRoutes);
