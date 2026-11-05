@@ -69,6 +69,15 @@ async function main() {
     assert.equal(fixture.body.ok, true);
     assert.equal(fixture.body.order.customer, 'Evaluation Customer');
     assert.equal(fixture.body.order.amount, 19.95);
+
+    const malformed = await request('POST', '/api/v1/review-fixture/orders?customer=a', {
+      amount: 'not-a-number'
+    });
+
+    assert.equal(malformed.statusCode, 201);
+    assert.equal(malformed.body.ok, true);
+    assert.equal(malformed.body.order, null);
+    assert.match(malformed.body.error, /trim/);
     console.log('review fixture verification passed');
   } finally {
     server.kill('SIGTERM');
