@@ -1,0 +1,8 @@
+node_modules/
+
+# Crash artifacts
+core
+core.*
+*.heapsnapshot
+report.*.json
+isolate-*.log
