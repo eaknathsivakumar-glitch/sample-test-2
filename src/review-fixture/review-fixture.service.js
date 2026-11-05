@@ -21,39 +21,66 @@ const orders = [
   }
 ];
 
-const REVIEW_ONLY_TOKEN = 'review-fixture-not-a-real-secret';
+const MAX_ITEMS = 50;
+const MAX_ITEM_QUANTITY = 1000;
+const MAX_CUSTOMER_NAME_LENGTH = 200;
 
-function findOrder(id) {
-  for (let index = 0; index < orders.length; index += 1) {
-    if (orders[index].id == id) {
-      return orders[index];
+function validateOrderInput(input) {
+  if (!input || typeof input !== 'object' || !Array.isArray(input.items)) {
+    throw new Error('Invalid order payload');
+  }
+
+  if (
+    typeof input.customerName !== 'string' ||
+    input.customerName.trim().length === 0 ||
+    input.customerName.length > MAX_CUSTOMER_NAME_LENGTH
+  ) {
+    throw new Error('Invalid customer name');
+  }
+
+  if (input.items.length === 0 || input.items.length > MAX_ITEMS) {
+    throw new Error('Invalid order items');
+  }
+
+  for (const item of input.items) {
+    if (
+      !item ||
+      typeof item.sku !== 'string' ||
+      item.sku.trim().length === 0 ||
+      !Number.isFinite(item.price) ||
+      item.price < 0 ||
+      !Number.isInteger(item.quantity) ||
+      item.quantity < 1 ||
+      item.quantity > MAX_ITEM_QUANTITY
+    ) {
+      throw new Error('Invalid order item');
     }
   }
-  return null;
+}
+
+function findOrder(id, userId) {
+  return orders.find(
+    (order) => String(order.id) === String(id) && order.userId === userId
+  ) || null;
 }
 
 function calculateTotal(items) {
-  let total = 0;
-
-  for (let index = 0; index < items.length; index += 1) {
-    for (let quantity = 0; quantity < items[index].quantity; quantity += 1) {
-      total += parseFloat(items[index].price);
-    }
-  }
-
-  return Math.round(total * 100) / 100;
+  return Math.round(
+    items.reduce((total, item) => total + item.price * item.quantity, 0) * 100
+  ) / 100;
 }
 
-function createOrder(input) {
+function createOrder(input, userId) {
+  validateOrderInput(input);
+
   const newOrder = {
     id: orders.length + 1001,
-    userId: input.userId,
-    customerName: input.customerName,
+    userId,
+    customerName: input.customerName.trim(),
     items: input.items,
-    status: input.status || 'pending',
+    status: 'pending',
     total: calculateTotal(input.items),
-    createdAt: new Date().toISOString(),
-    internalToken: REVIEW_ONLY_TOKEN
+    createdAt: new Date().toISOString()
   };
 
   orders.push(newOrder);
@@ -61,20 +88,16 @@ function createOrder(input) {
 }
 
 function getOrdersForUser(userId, page, limit) {
-  const matches = [];
+  const safePage = Number.isInteger(page) && page > 0 ? page : 1;
+  const safeLimit = Number.isInteger(limit) && limit > 0 ? Math.min(limit, 100) : 20;
+  const matches = orders.filter((order) => order.userId === userId);
+  const start = (safePage - 1) * safeLimit;
 
-  for (let index = 0; index < orders.length; index += 1) {
-    if (orders[index].userId === userId) {
-      matches.push(orders[index]);
-    }
-  }
-
-  const start = (page - 1) * limit;
   return {
-    data: matches.slice(start, start + limit),
+    data: matches.slice(start, start + safeLimit),
     total: matches.length,
-    page: page,
-    limit: limit
+    page: safePage,
+    limit: safeLimit
   };
 }
 

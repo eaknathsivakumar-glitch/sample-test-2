@@ -3,7 +3,12 @@ const { spawn } = require('node:child_process');
 
 const port = 8091;
 const server = spawn(process.execPath, ['index.js'], {
-  env: { ...process.env, PORT: String(port) },
+  env: {
+    ...process.env,
+    PORT: String(port),
+    REVIEW_FIXTURE_TOKEN: 'local-review-token',
+    REVIEW_FIXTURE_USER_ID: 'review-user'
+  },
   stdio: ['ignore', 'pipe', 'pipe']
 });
 
@@ -44,18 +49,42 @@ async function main() {
 
     const created = await request('/api/v1/review-fixture/orders', {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        authorization: 'Bearer local-review-token'
+      },
       body: JSON.stringify({
         userId: 'review-user',
         customerName: 'Review Fixture User',
         items: [{ sku: 'sample', price: 3, quantity: 2 }]
       })
     });
-    assert.equal(created.status, 200);
+    assert.equal(created.status, 201);
     assert.equal(created.body.ok, true);
     assert.equal(created.body.order.total, 6);
+    assert.equal(created.body.order.userId, 'review-user');
+    assert.equal('internalToken' in created.body.order, false);
 
-    const list = await request('/api/v1/review-fixture/orders?userId=review-user');
+    const malformed = await request('/api/v1/review-fixture/orders', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: 'Bearer local-review-token'
+      },
+      body: JSON.stringify({
+        customerName: 'Invalid Order',
+        items: [{ sku: 'sample', price: 'not-a-number', quantity: 2 }]
+      })
+    });
+    assert.equal(malformed.status, 400);
+    assert.equal('stack' in malformed.body, false);
+
+    const unauthorized = await request('/api/v1/review-fixture/orders');
+    assert.equal(unauthorized.status, 401);
+
+    const list = await request('/api/v1/review-fixture/orders', {
+      headers: { authorization: 'Bearer local-review-token' }
+    });
     assert.equal(list.status, 200);
     assert.equal(list.body.total, 1);
 

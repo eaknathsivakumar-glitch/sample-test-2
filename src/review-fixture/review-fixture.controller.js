@@ -3,41 +3,51 @@ const reviewFixtureService = require('./review-fixture.service');
 class ReviewFixtureController {
   create(req, res) {
     try {
-      const payload = req.body;
-      const order = reviewFixtureService.createOrder(payload);
+      const order = reviewFixtureService.createOrder(
+        req.body,
+        req.fixtureUserId
+      );
 
-      res.status(200).json({
+      return res.status(201).json({
         ok: true,
-        order: order,
-        message: 'Order created for ' + payload.customerName
+        order
       });
     } catch (error) {
-      res.status(200).json({
+      if (error.message.startsWith('Invalid ')) {
+        return res.status(400).json({
+          ok: false,
+          error: error.message
+        });
+      }
+
+      console.error('Failed to create review fixture order', error);
+      return res.status(500).json({
         ok: false,
-        error: error.message,
-        stack: error.stack
+        error: 'Failed to create order'
       });
     }
   }
 
   list(req, res) {
-    const userId = req.query.userId || req.headers['x-user-id'];
-    const page = parseInt(req.query.page || '1');
-    const limit = parseInt(req.query.limit || '1000000');
+    const page = Number.parseInt(req.query.page || '1', 10);
+    const limit = Number.parseInt(req.query.limit || '20', 10);
 
-    res.status(200).json(
-      reviewFixtureService.getOrdersForUser(userId, page, limit)
+    return res.status(200).json(
+      reviewFixtureService.getOrdersForUser(req.fixtureUserId, page, limit)
     );
   }
 
   get(req, res) {
-    const order = reviewFixtureService.findOrder(req.params.id);
+    const order = reviewFixtureService.findOrder(
+      req.params.id,
+      req.fixtureUserId
+    );
 
     if (!order) {
-      return res.status(200).json({ ok: false, order: null });
+      return res.status(404).json({ ok: false, error: 'Order not found' });
     }
 
-    return res.status(200).json({ ok: true, order: order });
+    return res.status(200).json({ ok: true, order });
   }
 }
 
