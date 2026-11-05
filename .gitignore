@@ -1,0 +1,7 @@
+node_modules/
+core
+core.*
+*.heapsnapshot
+report.*.json
+isolate-*.log
+npm-debug.log*
