@@ -1,0 +1,11 @@
+node_modules/
+
+# Local logs and runtime output
+*.log
+
+# Crash artifacts
+core
+core.*
+*.heapsnapshot
+report.*.json
+isolate-*.log
