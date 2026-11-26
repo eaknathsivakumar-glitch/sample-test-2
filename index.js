@@ -1,1 +1,3 @@
-require('./src/index');
+const { startServer } = require('./src');
+
+startServer();
