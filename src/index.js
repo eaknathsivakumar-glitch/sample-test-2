@@ -1,19 +1,11 @@
-const express = require('express');
-const healthRoutes = require('./routes/health.routes');
+const createApp = require('./app');
+const app = createApp();
 
-const app = express();
-const PORT = process.env.PORT || 8080;
+const port = Number(process.env.PORT || 8080);
+const host = process.env.HOST || '0.0.0.0';
 
-// Middleware
-app.use(express.json());
-
-// Routes
-app.use('/api/v1', healthRoutes);
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Health check available at http://localhost:${PORT}/health`);
+const server = app.listen(port, host, () => {
+  console.log(`API listening on ${host}:${port}`);
 });
 
-module.exports = app;
+module.exports = server;

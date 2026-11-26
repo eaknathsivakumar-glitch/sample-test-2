@@ -1,0 +1,10 @@
+node_modules/
+.env
+*.sqlite
+*.sqlite-*
+npm-debug.log*
+core
+core.*
+*.heapsnapshot
+report.*.json
+isolate-*.log
