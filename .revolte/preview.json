@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "start": "PATH=\"$HOME/.local/node-v22.23.2-linux-x64/bin:$PATH\" PORT=4173 node index.js",
+  "port": 4173,
+  "type": "api",
+  "install": [
+    {
+      "name": "Node.js 22.23.2",
+      "check": "test -x \"$HOME/.local/node-v22.23.2-linux-x64/bin/node\"",
+      "run": "mkdir -p \"$HOME/.local\" && curl -fsSL https://nodejs.org/dist/v22.23.2/node-v22.23.2-linux-x64.tar.xz | tar -xJ -C \"$HOME/.local\""
+    },
+    {
+      "name": "Application dependencies",
+      "check": "test -d node_modules",
+      "run": "PATH=\"$HOME/.local/node-v22.23.2-linux-x64/bin:$PATH\" npm ci"
+    }
+  ],
+  "services": []
+}
