@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "start": "HOST=0.0.0.0 PORT=4173 npm run dev",
+  "port": 4173,
+  "type": "api",
+  "install": [
+    {
+      "name": "Node.js 22",
+      "check": "node --version",
+      "run": "curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs"
+    },
+    {
+      "name": "Node dependencies",
+      "check": "test -d node_modules",
+      "run": "npm ci"
+    }
+  ],
+  "services": []
+}
