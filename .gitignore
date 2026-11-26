@@ -1,0 +1,15 @@
+node_modules/
+.revolte/runtime/
+
+# Local SQLite data
+/data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Crash artifacts
+core
+core.*
+*.heapsnapshot
+report.*.json
+isolate-*.log
